@@ -1,0 +1,150 @@
+﻿<Window x:Class="WPF_EXAM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_EXAM"
+        mc:Ignorable="d"
+        Title="Студенты" 
+    Height="600" 
+    Width="900" 
+    WindowStartupLocation="CenterScreen" 
+    MinWidth="800"
+    Keyboard.KeyUp="Window_KeyUp">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0"
+              Grid.ColumnSpan="2" 
+              Name="header">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Width="200">
+                <Button Content="Поиск"
+                        Width="70"
+                        DockPanel.Dock="Left"
+                        Click="Search_Click"/>
+                <TextBox Text="{Binding Path=SearchText }"/>
+            </DockPanel>            
+        </Grid>
+
+
+        <ListView Grid.Row="1" 
+                 Grid.ColumnSpan="2"
+                 x:Name="list" 
+                 SelectionChanged="list_SelectionChanged"
+                  GridViewColumnHeader.Click="list_Click">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="Auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=SurName}" Header="SurName" Width="Auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Patronymic}" Header="Patronymic" Width="Auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=GroupNumber}" Header="GroupNumber" Width="Auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=PhoneNumber}" Header="PhoneNumber" Width="Auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=EntryDate,StringFormat='от {0:d}',ConverterCulture='ru-RU'}" Header="EntryDate" Width="Auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ReleaseDate,ConverterParameter=AddYears(5),StringFormat='до {0:d}',ConverterCulture='ru-RU'}" Header="ReleaseDate" Width="Auto"/>
+
+                    <GridViewColumn Header="Photo" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImagePublic}"/>                                
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+        </ListView>
+
+
+        <Grid Grid.Column="2"
+              Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Content="Добавить данные" 
+                    Grid.Row="0" 
+                    x:Name="add" 
+                    Click="ButtonAdd_Click" >
+            </Button>
+            <Button Content="Удалить данные" 
+                    Grid.Row="2" 
+                    x:Name="del" 
+                    Click="ButtonDel_Click"
+                    />
+            <Button Content="Изменить данные"
+                    Grid.Row="1" 
+                    Name="change"
+                    Click="ButtonChange_Click"/>
+
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                          Height="350" 
+                          Grid.Row="4">
+                <StackPanel x:Name="ChangeAdd"
+                        Visibility="Hidden">
+
+                    <Label Content="Данные" 
+                       x:Name="LabelContent"
+                       FontSize="20" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,4"/>                  
+                    <Label>Имя:</Label>
+                    <TextBox x:Name="TextBoxName"/>
+                    <Label >Фамилия:</Label>
+                    <TextBox x:Name="TextBoxSurname"/>
+                    <Label>Отчество:</Label>
+                    <TextBox x:Name="TextBoxPatronymic"/>
+                    <Label >Группа №:</Label>
+                    <TextBox x:Name="TextBoxGroup" ></TextBox>
+                    <Label >Телефон№:</Label>
+                    <TextBox x:Name="TextBoxPhone" ></TextBox>
+                    <Label >Дата поступления:</Label>
+                    <DatePicker x:Name="DatePickerEntryDate" ></DatePicker>
+
+                    <Grid  Height="30" Margin="0,10" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" 
+                            x:Name="ok"
+                            Click="Button_OK"                             
+                            IsEnabled="False"
+                            >Ок</Button>
+                        <Button Grid.Column="1"
+                            Click="Button_Clear" 
+                            >Очистить</Button>
+                        <Button Grid.Column="2"
+                            Click="Button_Cancel" 
+                            >Отменить</Button>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>
